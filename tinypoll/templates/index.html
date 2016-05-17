@@ -1,0 +1,5 @@
+<h2>Polls</h2>
+
+{% for poll in polls %}
+<p>{{ poll.id }} <a href="/{{ poll.id }}">{{ poll.title }}</a></p>
+{% endfor %}

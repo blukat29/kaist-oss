@@ -1,0 +1,7 @@
+<h2>{{ poll.id }}. {{ poll.title }}</h2>
+
+<form action="">
+{% for option in options %}
+<p>{{ option.text }}</p>
+{% endfor %}
+</form>
