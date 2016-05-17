@@ -2,6 +2,6 @@
 
 <form action="">
 {% for option in options %}
-<p>{{ option.text }}</p>
+<p><a href="/{{ poll.id }}/{{ option.id }}">{{ option.text }}</a> {{ option.votes }}</p>
 {% endfor %}
 </form>
