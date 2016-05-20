@@ -1,0 +1,40 @@
+diff --git a/collect_client/run_client.py b/collect_client/run_client.py
+index 8e18a0f..b2668ba 100644
+--- a/collect_client/run_client.py
++++ b/collect_client/run_client.py
+@@ -21,7 +21,7 @@ import sys, socket
+ 
+ from collect_client import *
+ from client_psutil_plugin import psutil_stat
+-#from client_arcus_plugin import arcus_stat
++from client_arcus_plugin import arcus_stat
+ #from client_memcached_plugin import memcached_stat
+ #from client_redis_plugin import redis_stat
+ #from client_cubrid_plugin import cubrid_stat
+@@ -42,12 +42,12 @@ else:
+ 	c = collectd(hostname, server_address, stack=10)
+ 
+ 
+-"""
+ # arcus stat example
+ arcus = arcus_stat()
+ arcus.auto_register()
+ c.plugins.append(arcus)
+ 
++"""
+ # memcached stat example
+ mc = memcached_stat()
+ mc.auto_register()
+diff --git a/common/settings.py b/common/settings.py
+index d3e7452..8c7b2d2 100644
+--- a/common/settings.py
++++ b/common/settings.py
+@@ -73,7 +73,7 @@ main_link = [	('system', '/system'),
+ 
+ 
+ # for arcus_mon
+-arcus_zk_addrs = []
++arcus_zk_addrs = ["arcus:2181"]
+ if 'ARCUS_ZK_ADDRESSES' in os.environ:
+     arcus_zk_addrs = os.environ['ARCUS_ZK_ADDRESSES'].split(',')
+ 
