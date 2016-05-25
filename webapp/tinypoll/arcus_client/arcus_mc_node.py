@@ -25,7 +25,7 @@ import threading
 from threading import Lock
 import select
 
-from arcus import *
+from .arcus import *
 
 
 # Some parts of Connection and ArcusMCNode is came from python memcache module
