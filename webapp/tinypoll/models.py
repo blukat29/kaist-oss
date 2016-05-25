@@ -29,5 +29,7 @@ def get_arcus_client():
     code = app.config['ARCUS_SERVICE_CODE']
     client = Arcus(ArcusLocator(ArcusMCNodeAllocator(ArcusTranscoder())))
     client.connect(zk, code)
+    return client
 
-arcus = get_arcus_client()
+if app.config['USE_ARCUS']:
+    arcus = get_arcus_client()

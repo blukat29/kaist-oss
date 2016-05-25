@@ -20,4 +20,4 @@ def option(poll_id, option_id):
     option = Option.query.get(option_id)
     option.votes += 1
     db.session.commit()
-    return redirect(url_for('tinypoll.index'))
+    return redirect(url_for('tinypoll.poll', poll_id=poll_id))

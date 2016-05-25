@@ -4,7 +4,6 @@ import string
 from flask.ext.script import Manager
 from tinypoll import app, db
 from tinypoll.models import Poll, Option
-import config
 
 manager = Manager(app)
 
@@ -25,14 +24,15 @@ def populate():
     def random_string():
         return ''.join([random.choice(charset) for _ in range(16)])
 
-    POLL_COUNT = 10
+    POLL_COUNT = 100
     OPTION_MIN = 2
-    OPTION_MAX = 6
+    OPTION_MAX = 10
 
     db.drop_all()
     db.create_all()
 
     for i in range(POLL_COUNT):
+        print(i)
         p = Poll("poll_" + random_string())
         db.session.add(p)
 
