@@ -1,5 +1,6 @@
 import datetime
-from tinypoll import db
+from tinypoll import app, db
+from .arcus_client import Arcus, ArcusLocator, ArcusMCNodeAllocator, ArcusTranscoder
 
 class Poll(db.Model):
     __tablename__ = 'poll'
@@ -22,3 +23,11 @@ class Option(db.Model):
     def __init__(self, text):
         self.text = text
         self.votes = 0
+
+def get_arcus_client():
+    zk = app.config['ARCUS_ZK_ADDRESS']
+    code = app.config['ARCUS_SERVICE_CODE']
+    client = Arcus(ArcusLocator(ArcusMCNodeAllocator(ArcusTranscoder())))
+    client.connect(zk, code)
+
+arcus = get_arcus_client()

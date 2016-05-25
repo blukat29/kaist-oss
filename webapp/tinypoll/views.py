@@ -17,7 +17,7 @@ def poll(poll_id):
 
 @blueprint.route('/<int:poll_id>/<int:option_id>')
 def option(poll_id, option_id):
-	option = Option.query.get(option_id)
-	option.votes += 1
-	db.session.commit()
-	return redirect(url_for('tinypoll.index'))
+    option = Option.query.get(option_id)
+    option.votes += 1
+    db.session.commit()
+    return redirect(url_for('tinypoll.index'))

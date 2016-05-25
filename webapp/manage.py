@@ -6,7 +6,6 @@ from tinypoll import app, db
 from tinypoll.models import Poll, Option
 import config
 
-app.config.from_object(config)
 manager = Manager(app)
 
 @manager.command
