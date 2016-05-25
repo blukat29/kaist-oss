@@ -9,12 +9,13 @@ class Poll(db.Model):
     created_at = db.Column(db.DateTime)
     options = db.relationship('Option', backref='poll', lazy='dynamic')
 
-    def __init__(self, title):
+    def __init__(self, title, id=None):
         self.title = title
         self.created_at = datetime.datetime.utcnow()
+        self.id = id
 
 class Option(db.Model):
-    __tablename__ = 'option'
+    __tablename__ = 'options'
     id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
     text = db.Column(db.String(100))
@@ -33,3 +34,35 @@ def get_arcus_client():
 
 if app.config['USE_ARCUS']:
     arcus = get_arcus_client()
+
+def options_basic(options):
+    pass
+
+def options_arcus(options):
+    for option in options:
+        key = "option:%d" % option.id
+        ret = arcus.get(key).get_result()
+        if ret:
+            option.votes = ret
+        else:
+            arcus.set(key, option.votes)
+
+def vote_basic(option_id):
+    option = Option.query.get(option_id)
+    option.votes += 1
+    db.session.commit()
+
+def vote_arcus(option_id):
+    key = "option:%d" % option_id
+    ret = arcus.get(key).get_result()
+    if not ret:
+        arcus.set(key, 1)
+    else:
+        incrd = arcus.set(key, ret+1)
+
+if app.config['USE_ARCUS']:
+    vote = vote_arcus
+    get_options = options_arcus
+else:
+    vote = vote_basic
+    get_options = options_basic
